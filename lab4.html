@@ -64,23 +64,25 @@
                 </div>
             </div>
         </div>
-    </body>
-    <script>
-        window.addEventListener('load', () => {
-            const card = document.getElementById('welcomeCard');
-            const btn = document.getElementById('dismissWelcome');
-            if(!card || !btn) return;
 
-            //effect to fade it in 
-            card.style.opacity = 0;
-            card.style.transition = 'opacity .4s ease';
-            requestAnimationFrame(() => card.style.opacity = 1);
-
-            // when hit button to close it hides the card in a smooth way
-            btn.addEventListener('click', () => {
+        <script>
+            window.addEventListener('load', () => {
+                const card = document.getElementById('welcomeCard');
+                const btn = document.getElementById('dismissWelcome');
+                if(!card || !btn) return;
+    
+                //effect to fade it in 
                 card.style.opacity = 0;
-                setTimeout(() => card.remove(), 400);
+                card.style.transition = 'opacity .4s ease';
+                requestAnimationFrame(() => card.style.opacity = 1);
+    
+                // when hit button to close it hides the card in a smooth way
+                btn.addEventListener('click', () => {
+                    card.style.opacity = 0;
+                    setTimeout(() => card.remove(), 400);
+                });
             });
-        });
-    </script>
+        </script>
+    </body>
+    
 </html>
