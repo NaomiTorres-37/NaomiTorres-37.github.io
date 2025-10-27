@@ -133,7 +133,23 @@
         `);
     }
         </script>
-
+<script>
+    setTimeout(() => {
+        document.body.insertAdjacentHTML("beforeend", `
+        <div class ="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast align-items-center text-bg-pink border-0 show" role="alert" aria-live="polite" aria-atomic="true" style="border-radius:1rem;">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="bi bi-truck me-2"></i>
+                        Your order has been processed! Expect delivery in <strong> 7-10 buisness days</strong>🚚💨
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 auto" data-bs-dismiss="toast" aria-label="close"></button>
+                    </div>
+                 </div>
+              </div>   
+            `);
+          }, 40000; //40,000ms = 40 seconds
+</script>
 
     </body>
     
