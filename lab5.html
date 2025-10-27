@@ -84,7 +84,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastname" required>
+                            <input type="text" class="form-control" id="lastName" required>
                             <div class="invalid-feedback">Please enter your last name.</div>
                         </div>
                         <div class="mb-3">
@@ -125,44 +125,71 @@
       <script>
 
         const form = document.getElementById('registerForm');
+
         form.addEventListener('submit', (event) => {
             event.preventDefault(); //
             event.stopPropagation(); //
 
-            const pwInput = document.getElementById('password');
-            const pw = pwInput.value;
-            const hasSpecial = /[!?]/.test(pw);
-            pwInput.setCustomValidity(hasSpecial ? '' : 'Password must include ! or ?');
-
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
-                return;
-            }
-
                 const firstName = document.getElementById('firstName').value.trim();
                 const lastname = document.getElementById('lastName').value.trim();
                 const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
                 const dob = document.getElementById('dob').value;
-                const maskedPw = '*'.repeat(pw.length);
 
-                const old = document.getElementById('regResult');
-                if (old) old.remove();
+const user = {firstName, lastName, email, password, dob };
 
-                form.insertAdjacentHTML ('afterend', `
-                <div id="regResult" class ="alert alert-success mt-4 rounded-4" role="alert">
-                    <h5 class="mb-2">Registration Successful 🎉</h5>
-                    <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Password:</strong> ${maskedPw}</p>
-                    <p><strong>Date of Birth:</strong> ${dob}</p> 
-                    </div>
-                `);
-                form.reset();
-                form.classList.remove('was-validated');
-            
-               
-        });    
-                
+const maskedPw = '*'.repeat(password.length);
+
+const errors = [];
+
+if (!user.firstName) errors.push('First name is required. ');
+if (!user.lastName) errors.push('Last name is required.');
+if (!user.email) errors.push('Email is required.');
+if (!user.dob) errors.push('Date of birth is required');
+if (!user.password) errors.push('Password is required');
+
+const hasSpecial = /[!?]/.test(user.password);
+if (user.password && !hasSpecial){
+    errors.push('Passowrd must be 10 characters long.');
+}
+
+ const pwInput = document.getElementById('password');
+ pwInput.setCustomValidity(hasSpecial ? '' : 'Password must include ! or ? ');
+
+ const old = document.getElementById('regResult');
+ if (old) old.remove();
+
+ if (errors.length === 0) {
+
+    form.classList.remove('was-validated');
+    form.insertAdjacentHTML('afterend', `
+    <div id="regResult" class="alert alert-success mt-4 rounded-4" role="alert">
+        <h5 class="mb-2">Registration Successful 🎉</h5>
+        <p><strong>Name:</strong> ${user.firstName} ${user.lastName}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Password:</strong> ${maskedPw}</p>
+        <p><strong>Date of Birth:</strong> ${user.dob}</p>
+        </div>
+`);
+form.rest();
+ } else {
+
+    form.classList.add('was-validated');
+    const list = errors.map(e => `<li>${e}</li>`).join('');
+    form.imsertAdjacentHTML('afterend' , `
+        <div id="regResult" class="alert alert-danger mt-4 rounded-4" role="alert">
+            <h5 class="mb-2">Registration Failed ❌ </h5>
+            <ul class="mb-3">${list}</ul>
+            <p class="mb-1"><strong>Entered Name:</strong> ${user.firstName || '(blank)'} ${user.lastName || ''}</p>
+            <p class="mb-1"><strong>Entered Email:</strong> ${user.email || '(blank)'}</p>
+            <p class="mb-1"><strong>Entered Password:</strong> ${maskedPw}</p>
+            <p class="mb-0"><strong>Entered DOB:</strong> ${user.dob || '(blank)'}</p>
+        </div>
+     `);   
+ }
+});          
+       
       </script>
+      
   </body>
   </html>
