@@ -94,9 +94,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="text" class="form-control" id="password" minlength="10" required>
-                            <div class="invalid-feedback">password must be 10 characters.</div>
+                            <input type="text" class="form-control" id="password"
+                             minlength="10" 
+                             pattern="^(?=.*[!?]).{8,}$"
+                             required>
+                             <div class="form-text">
+                                Password must be at least 10 characters and include <strong>!</strong> or <strong>?</strong>.
+                             </div>
+                            <div class="invalid-feedback">password must include ! or ?.
+                            </div>
                         </div>
+
                         <div class="mb-3">
                             <label for="dob" class="form-label">Date of Birth</label>
                             <input type="date" class="form-control" id="dob" required>
@@ -116,7 +124,7 @@
       <script>
 
         const form = document.getElementById('registerForm');
-        form.sddEventListener('submit', (event) => {
+        form.addEventListener('submit', (event) => {
             even.preventDefault(); //
             event.stopPropagation(); //
 
@@ -125,7 +133,7 @@
                 const lastname = document.getElementById('lastName').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const password = document.getElementById('password').value.trim();
-                const dob = document.gerElementById('dob').value;
+                const dob = document.getElementById('dob').value;
                 const maskedPw = '*'.repeat(password.length);
 
                 form.insertAdjacentHTML ('afterend', `
