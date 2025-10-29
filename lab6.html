@@ -59,6 +59,20 @@
         <button id="loadBtn" class="btn btn-primary">Load Cat Facts</button>
     </div>
 
+    <!--Table-->
+
+    <div class="container mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>factId</th>
+                    <th>fact</th>
+                </tr>
+            </thead>
+            <tbody id="factsBody"></tbody>
+        </table>
+    </div>
+
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
       <script>
@@ -72,12 +86,28 @@
             return response.json();
            })
            .then(function (data) {
+            if (!data || !Array.isArray(data.facts)) {
+                console.log("No facts found", data);
+                return;
+            }
             data.facts.sort(function(a, b) {
                 return a.factId - b.factId;
            });
 
-           console.log("sorted facts:", data.facts);
-           console.log("Image URL:", data.image);
+           const tbody = document.getElementById("factsBody");
+           tbody.innerHTML = "";
+
+           data.facts.forEach(function (item) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td>${item.fsctId}</td>
+            <td>${item.fact}</td>
+            `;
+            tbody.appendChild(tr); 
+           });
+
+           console.log("finished!");
+
         })
 
            .catch(function (error) {
