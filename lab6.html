@@ -58,7 +58,7 @@
         <p class="lead">Click this button to see some information about Cats </p>
         <button id="loadBtn" class="btn btn-primary">Load Cat Facts</button>
     </div>
-    
+
 <!-- image-->
  <div class="container text-center mt-4">
     <img id="catImage"
@@ -114,6 +114,12 @@
             `;
             tbody.appendChild(tr); 
            });
+
+           const img = document.getElementById("catImage");
+           if (img && data.catPhoto){
+            img.src = data.catPhoto;
+            img.alt = "Cat from API"
+           }
 
            console.log("finished!");
 
