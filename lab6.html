@@ -63,8 +63,23 @@
 
       <script>
         const loadBtn = document.getElementById("loadBtn");
+
         loadBtn.addEventListener("click", function() {
-            console.log("Button clicked! we'll call the Rest API here next.");
+           loadBtn.textContent = "Loading...";
+
+           fetch("https://brianobruno.github.io/cats.json", { method: "GET"})
+           .then(function (response) {
+            return response.json();
+           })
+           .then(function (data) {
+            console.log(data);
+           })
+           .catch(function (error) {
+            console.log("Error:", error);
+           })
+           .finally(function () {
+            loadBtn.textContent = "Load Cat Facts";
+           });
               });
          </script>
 
