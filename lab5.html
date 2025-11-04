@@ -28,7 +28,7 @@
       .btn-pink {
         background-color:#e75480;
         border:none;
-        transition:backgorujdn-color .2s;
+        transition:background-color .2s;
       }
       .btn-pink:hover {background-color:#d64570; }
     </style>
@@ -79,7 +79,7 @@
             <div class="col-md-8 col-lg-6">
                 <div class="card p-4 p-md-5">
                     <h3 class="text-center mb-4">Create Your Account</h3>
-                    <form id="registerForm" novalidate>
+                    <form id="registerForm" novalidate onsubmit="return handleSubmit(Event)">
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name</label>
                             <input type="text" class="form-control" id="firstName" required>
@@ -127,11 +127,14 @@
 
       <script>
 
+        function handleSubmit(event) {
+          event.preventDefault();
+          event.stopPropagation();
+        
+
         const form = document.getElementById('registerForm');
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault(); //
-            event.stopPropagation(); //
+      
 
                 const firstName = document.getElementById('firstName').value.trim();
                 const lastName = document.getElementById('lastName').value.trim();
